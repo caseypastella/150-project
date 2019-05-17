@@ -1,0 +1,36 @@
+before_script:
+    - wget -q -O junit.jar http://search.maven.org/remotecontent?filepath=junit/junit/4.12/junit-4.12.jar > /dev/null
+    - wget -q -O hamcrest.jar http://search.maven.org/remotecontent?filepath=org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar > /dev/null
+StudentCourse-Build:
+    script:
+        - javac -cp junit.jar -d . StudentCourse.java StudentCourseTest.java StudentCourseTestThin.java
+StudentCourse-TestMaster:
+    script:
+        - javac P3.java
+        - java -cp hamcrest.jar:junit.jar:. org.junit.runner.JUnitCore StudentCourseTest
+        - java -cp hamcrest.jar:junit.jar:. org.junit.runner.JUnitCore StudentCourseTestThin
+Student-Build:
+    script:
+        - javac -cp junit.jar -d . StudentCourse.java Student.java StudentTest.java StudentTestThin.java
+Student-TestMaster:
+    script:
+        - javac P3.java
+        - java -cp hamcrest.jar:junit.jar:. org.junit.runner.JUnitCore StudentTest
+        - java -cp hamcrest.jar:junit.jar:. org.junit.runner.JUnitCore StudentTestThin
+P5-Build:
+    script:
+        - javac -cp junit.jar -d . StudentCourse.java Student.java P5.java P5Test.java P5TestThin.java
+P5-TestMaster:
+    script:
+        - javac P3.java
+        - java -cp hamcrest.jar:junit.jar:. org.junit.runner.JUnitCore P5Test
+        - java -cp hamcrest.jar:junit.jar:. org.junit.runner.JUnitCore P5TestThin
+StudentCourse-Upload:
+    script:
+        - 'python3 webcat-submitter.py "CPSC 150/P5A: StudentCourse" StudentCourse.java StudentCourseTest.java'
+Student-Upload:
+    script:
+        - 'python3 webcat-submitter.py "CPSC 150/P5B: Student" Student.java StudentTest.java'
+P5-Upload:
+    script:
+        - 'python3 webcat-submitter.py "CPSC 150/P5C: P5" P5.java P5Test.java'
